@@ -1,0 +1,30 @@
+# this is an example config file for pcb2gcode.
+# place this in the same directory as your gerber files to save typing
+
+# You may want to uncomment and change those in local project files
+#back=eggbot-B_Cu.gbl
+#drill=eggbot.drl
+outline=eggbot-Edge_Cuts.gbr
+# parameters for isolation routing / engraving / etching
+zwork=-0.1
+zsafe=1
+zchange=30
+mill-feed=200
+mill-speed=30000
+extra-passes=1
+metric=1
+offset=0.15
+
+zcut=-1.8
+cutter-diameter=3.175
+cut-feed=50
+cut-speed=10000
+cut-infeed=2
+# parameters for cutting out boards
+# drilling parameters
+zdrill=-2.5
+drill-feed=300
+drill-speed=20000
+#smooth=1
+dpi=4000
+#mirror-absolute=1
