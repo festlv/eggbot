@@ -55,6 +55,5 @@ G01 X-1.63830 Y0.05080 F50.00000
 G04 P0 ( dwell for no time -- G64 should not smooth over this point )
 G00 Z30.00000 ( retract )
 
-M9 ( Coolant off. )
-M2 ( Program end. )
+M5 ( Program end. )
 
