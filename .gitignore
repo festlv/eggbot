@@ -3,3 +3,5 @@ $*
 *.bak
 *-cache.lib
 _autosave*
+
+fw/.build
