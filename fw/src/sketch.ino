@@ -62,7 +62,7 @@ const int YAXIS_STEP_PER_REVOLUTION = 200*16;
  * Other Configuration
  */
 
-#define DEFAULT_PEN_UP_POSITION 20
+#define DEFAULT_PEN_UP_POSITION 45
 #define XAXIS_MIN_STEPCOUNT 0
 #define XAXIS_MAX_STEPCOUNT 0
 #define DEFAULT_ZOOM_FACTOR 1.0 // Zoom factor based on 1 px = 1 step gcode must be in px aka step (not mm)
@@ -367,6 +367,9 @@ void process_commands(char command[], int command_length) // deals with standard
   {
     double value;
     int codenum = (int)strtod(&command[1], NULL);
+
+    uint8_t prev_servo_value;
+
     switch(codenum)
     {   
       case 18: // Disable Drives
@@ -391,7 +394,22 @@ void process_commands(char command[], int command_length) // deals with standard
             }           
             servoEnabled=false;
           }
-          servo.write((int)value);
+            prev_servo_value = servo.read();
+            if ((value - prev_servo_value) > 0) {
+                //split the movement range in 5 intervals with 20ms delay between them
+                while (servo.read() < value) {
+                    servo.write(servo.read() + (value - prev_servo_value)/10);
+                    SoftwareServo::refresh();
+                    delay(50);
+                }
+            } else {
+                while (servo.read() > value) {
+                    servo.write(servo.read() - (prev_servo_value - value)/5);
+                    SoftwareServo::refresh();
+                    delay(40);
+                }
+
+            }
         }
         break;
         
